@@ -4,18 +4,16 @@ class ProductList extends React.Component {
     this.state = { products: [] };
   }
 
+  // after mounting the with an empty state and then populate with data from Seed
+  componentDidMount() {
+    this.setState({ products: Seed.products });
+  }
+
   handleProductUpVote(productId) {
     console.log(productId + ' was upvoted.');
   }
 
   render() {
-    // Source of data
-
-    /**
-     * Calling .sort() on this.state.products will technically mutate that array, which is generally considered bad practice. 
-     * We’re cutting a slight corner just to make the example clearer. 
-     * A better (but longer) way to do this would be to copy this array when sorting - which we’re going to talk about below (so don’t worry too much about it now).
-     */
     const products = this.state.products.sort((a, b) => b.votes - a.votes);
     const productComponents = products.map((product) => (
       <Product
