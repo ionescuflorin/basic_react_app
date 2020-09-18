@@ -1,11 +1,22 @@
 class ProductList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { products: [] };
+  }
+
   handleProductUpVote(productId) {
     console.log(productId + ' was upvoted.');
   }
 
   render() {
     // Source of data
-    const products = Seed.products.sort((a, b) => b.votes - a.votes);
+
+    /**
+     * Calling .sort() on this.state.products will technically mutate that array, which is generally considered bad practice. 
+     * We’re cutting a slight corner just to make the example clearer. 
+     * A better (but longer) way to do this would be to copy this array when sorting - which we’re going to talk about below (so don’t worry too much about it now).
+     */
+    const products = this.state.products.sort((a, b) => b.votes - a.votes);
     const productComponents = products.map((product) => (
       <Product
         key={'product-' + product.id}
@@ -26,7 +37,7 @@ class ProductList extends React.Component {
 class Product extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.handleUpVote = this.handleUpVote.bind(this);
   }
 
